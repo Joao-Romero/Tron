@@ -37,6 +37,8 @@ public class Game {
 
              for (int i = 0; i < cars.length; i++) {
                  cars[i].move();
+
+
                  checkCollisions(cars[i]);
              }
          }
@@ -45,6 +47,12 @@ public class Game {
     //compare with cells visited
     public void checkCollisions (Car car) {
         for (Car cc : cars) {
+
+            //System.out.println("test");
+            if (car.getRepresentation().getGrid().isCellVisited(car.getRepresentation().getCol(), car.getRepresentation().getRow())) {
+                car.crash();
+                car.getRepresentation().getModel().setColor(Color.RED);
+            }
             //no point checking with self
             if (cc == car) {
                 continue;
@@ -58,9 +66,7 @@ public class Game {
                 car.getRepresentation().getModel().setColor(Color.RED);
             }
 
-            if (car.getRepresentation().getGrid().isCellVisited()) {
-                car.crash();
-            }
+
         }
     }
 

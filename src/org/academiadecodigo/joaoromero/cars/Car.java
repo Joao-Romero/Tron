@@ -61,6 +61,7 @@ public class Car {
         }
         System.out.println("On column: " + representation.getCol() + " ; " + "On row: " + representation.getRow());
         chooseNewDir();
+
         System.out.println("Dir taken: " + this.direction.name());
         accelerate();
     }

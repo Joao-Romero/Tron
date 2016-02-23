@@ -75,9 +75,19 @@ public final class Grid {
         }
     }
 
+    public void visitCell(int col, int row) {
+
+        int index = col * (rows - 1) + row + col; // before: col * row + row
+
+        cells[index].visit();
+    }
+
+    // TODO: make indexOf(col,row) private method
+
+    //returns cell state: visited or !visited (T/F)
     public boolean isCellVisited(int col, int row) {
 
-        int index = col * row + row;
+        int index = col * (rows - 1) + row + col; // before: col * row + row
 
         return cells[index].isVisited();
     }

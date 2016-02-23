@@ -12,7 +12,7 @@ public class Representation {
     private int row;
     private Rectangle model;
 
-    boolean[][] visited;
+    //boolean[][] visited;
 
     public Rectangle getModel() {
         return model;
@@ -22,7 +22,7 @@ public class Representation {
     public Representation(Grid grid) {
 
         //array of arrays with all the cells set to false (default): NUNO
-        visited = new boolean[grid.getWidth()][grid.getHeight()];
+        //visited = new boolean[grid.getWidth()][grid.getHeight()];
 
         this.grid = grid;
         col = (int) (Math.random() * grid.getCols());
@@ -63,30 +63,33 @@ public class Representation {
         row -= speed;
         //add 1 to account for the turn image glitch
         model = new Rectangle(getX(), getY() - speed + 1, grid.getCellSize(), grid.getCellSize());
-        visited(getCol(), getRow());
+        //visited(getCol(), getRow()); NUNOs method
         model.setColor(Color.GREEN);
         model.fill();
-        cell.visit(); //
+        //cell.visit();
+        grid.visitCell(getCol(), getRow());
     }
 
     public void moveSouth(int speed) {
         row += speed;
         //subtract 1 to account for the turn image glitch
         model = new Rectangle(getX(), getY() + speed - 1, grid.getCellSize(), grid.getCellSize());
-        visited(getCol(), getRow());
+        //visited(getCol(), getRow()); NUNOs method
         model.setColor(Color.GREEN);
         model.fill();
-        cell.visit(); //
+        //cell.visit();
+        grid.visitCell(getCol(), getRow());
     }
 
     public void moveEast(int speed) {
         col += speed;
         //subtract 1 to account for the turn image glitch
         model = new Rectangle(getX() + speed - 1, getY(), grid.getCellSize(), grid.getCellSize());
-        visited(getCol(), getRow());
+        //visited(getCol(), getRow()); NUNOs method
         model.setColor(Color.GREEN);
         model.fill();
-        cell.visit(); //
+        //cell.visit();
+        grid.visitCell(getCol(), getRow());
     }
 
     public void moveWest(int speed) {
@@ -94,10 +97,11 @@ public class Representation {
         //add 1 to account for the turn image glitch
         model = new Rectangle(getX() - speed + 1, getY(), grid.getCellSize(), grid.getCellSize());
         System.out.println("MOVE WEST - X = " + getX() + " SPEED = " + speed);
-        visited(getCol(), getRow());
+        //visited(getCol(), getRow()); NUNOs method
         model.setColor(Color.GREEN);
         model.fill();
-        cell.visit(); //
+        //cell.visit();
+        grid.visitCell(getCol(), getRow());
     }
 
     //checks if model is on an edge && intends to get out of the field
@@ -110,9 +114,9 @@ public class Representation {
     }
 
     //sets the visited cells to true (NUNOs method)
-    private void visited(int x, int y){
+    /*private void visited(int x, int y){
         System.out.println(x + "---x    y--- " + y);
         this.visited[x][y] = true;
-    }
+    }*/
 }
 

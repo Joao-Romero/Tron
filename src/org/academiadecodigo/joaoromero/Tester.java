@@ -2,6 +2,7 @@ package org.academiadecodigo.joaoromero;
 
 import org.academiadecodigo.joaoromero.field.Grid;
 import org.academiadecodigo.joaoromero.field.Representation;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 
 /**
  * Created by João Romero on 12/02/16.

@@ -11,6 +11,7 @@ public class Representation {
     private int col;
     private int row;
     private Rectangle model;
+    private Color color;
 
     //boolean[][] visited;
 
@@ -29,8 +30,7 @@ public class Representation {
         row = (int) (Math.random() * grid.getRows());
 
         model = new Rectangle(getX(), getY(), grid.getCellSize(), grid.getCellSize());
-        model.setColor(Color.GREEN);
-        model.fill();
+
     }
 
     public int getCol() {
@@ -49,6 +49,11 @@ public class Representation {
         return row * grid.getCellSize();
     }
 
+    public void draw() {
+        model.setColor(color);
+        model.fill();
+    }
+
     public Grid getGrid() {
         return grid;
     }
@@ -64,21 +69,15 @@ public class Representation {
         //add 1 to account for the turn image glitch
         model = new Rectangle(getX(), getY() - speed + 1, grid.getCellSize(), grid.getCellSize());
         //visited(getCol(), getRow()); NUNOs method
-        model.setColor(Color.GREEN);
-        model.fill();
-        //cell.visit();
-        grid.visitCell(getCol(), getRow());
+        leaveTrail();
     }
 
     public void moveSouth(int speed) {
         row += speed;
         //subtract 1 to account for the turn image glitch
         model = new Rectangle(getX(), getY() + speed - 1, grid.getCellSize(), grid.getCellSize());
-        //visited(getCol(), getRow()); NUNOs method
-        model.setColor(Color.GREEN);
-        model.fill();
-        //cell.visit();
-        grid.visitCell(getCol(), getRow());
+        //visited(getCol(), getRow()); NUNOs method\
+        leaveTrail();
     }
 
     public void moveEast(int speed) {
@@ -86,10 +85,7 @@ public class Representation {
         //subtract 1 to account for the turn image glitch
         model = new Rectangle(getX() + speed - 1, getY(), grid.getCellSize(), grid.getCellSize());
         //visited(getCol(), getRow()); NUNOs method
-        model.setColor(Color.GREEN);
-        model.fill();
-        //cell.visit();
-        grid.visitCell(getCol(), getRow());
+        leaveTrail();
     }
 
     public void moveWest(int speed) {
@@ -98,10 +94,16 @@ public class Representation {
         model = new Rectangle(getX() - speed + 1, getY(), grid.getCellSize(), grid.getCellSize());
         System.out.println("MOVE WEST - X = " + getX() + " SPEED = " + speed);
         //visited(getCol(), getRow()); NUNOs method
-        model.setColor(Color.GREEN);
+        leaveTrail();
+    }
+
+    private void leaveTrail() {
+        model.setColor(color);
         model.fill();
-        //cell.visit();
-        grid.visitCell(getCol(), getRow());
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     //checks if model is on an edge && intends to get out of the field

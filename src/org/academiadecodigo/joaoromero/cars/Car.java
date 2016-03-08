@@ -2,9 +2,10 @@ package org.academiadecodigo.joaoromero.cars;
 
 import org.academiadecodigo.joaoromero.field.Grid;
 import org.academiadecodigo.joaoromero.field.Representation;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 
 
-public class Car {
+public class Car implements Movable {
 
     private Representation representation;
     private int speed;
@@ -13,6 +14,7 @@ public class Car {
 
 
     public Car(int speed, Grid grid) {
+
         this.speed = speed;
         this.representation = new Representation(grid);
         this.direction = Direction.getRandomDirection();
@@ -24,6 +26,7 @@ public class Car {
 
     public void crash() {
         this.crashed = true;
+        getRepresentation().getModel().setColor(Color.RED);
     }
 
     public void setSpeed(int speed) {
@@ -34,11 +37,11 @@ public class Car {
         return representation;
     }
 
-    public void chooseNewDir() {
+    private void chooseNewDir() {
 
         Direction newDir;
 
-        if (Math.random() > 0.9) {
+        if (Math.random() > 0.7) {
             newDir = Direction.getRandomDirection();
 
             //car behaviour: doesn't turn 180º
@@ -55,19 +58,21 @@ public class Car {
     }
 
     public void move() {
-
-        if (isCrashed() || this.direction == null) {
-            return;
-        }
         System.out.println("On column: " + representation.getCol() + " ; " + "On row: " + representation.getRow());
         chooseNewDir();
 
         System.out.println("Dir taken: " + this.direction.name());
-        accelerate();
     }
 
     //makes model move in certain direction at given speed
-    private void accelerate() {
+    @Override
+    public void accelerate() {
+
+        if (isCrashed() || this.direction == null) {
+            return;
+        }
+
+        move();
 
         switch (this.direction) {
             case NORTH:
@@ -85,8 +90,20 @@ public class Car {
         }
     }
 
+    public void setColor(Color color) {
+        representation.setColor(color);
+    }
+
+    public void draw() {
+        representation.draw();
+    }
+
     private void toOppositeDirection() {
         direction = direction.getOppositeDirection();
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 }
 

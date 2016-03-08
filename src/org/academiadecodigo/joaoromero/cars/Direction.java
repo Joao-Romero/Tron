@@ -16,6 +16,7 @@ public enum Direction {
         return Direction.values()[randomNr];
     }
 
+    //TODO: to prevent always crashing when hitting edges, create method that chooses other 3 dirs
     public Direction getOppositeDirection() {
 
         switch (this) {

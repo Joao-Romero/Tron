@@ -1,9 +1,14 @@
 package org.academiadecodigo.joaoromero;
 
 import org.academiadecodigo.joaoromero.cars.Car;
+import org.academiadecodigo.joaoromero.cars.Movable;
+import org.academiadecodigo.joaoromero.cars.PlayableCar;
 import org.academiadecodigo.joaoromero.field.Grid;
 import org.academiadecodigo.joaoromero.field.PlayerColor;
 import org.academiadecodigo.simplegraphics.graphics.Color;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game {
 
@@ -11,9 +16,9 @@ public class Game {
 
     int delay;
 
-    Car[] cars;
-
-    Grid grid;
+    private ArrayList<Movable> cars;
+    private PlayableCar myCar;
+    private Grid grid;
 
     public Game(int width, int height, int cellSize, int delay) {
         grid = new Grid(cellSize, width, height);
@@ -33,97 +38,94 @@ public class Game {
         }
          */
 
-        cars = new Car[numbCarsCreated];
+        cars = new ArrayList<>();
+        myCar = new PlayableCar(1, Color.YELLOW, grid);
 
-        for (int i = 0; i < cars.length; i++) {
-            cars[i] = new Car(1, grid);
-            cars[i].setColor(getPlayerColor(i));
-            cars[i].draw();
-        }
-    }
+        for (int i = 0; i < numbCarsCreated; i++) {
+            Car c = new Car(1, grid);
+            c.draw();
 
-    private Color getPlayerColor(int number) {
-        Color color = Color.GREEN;
-        switch (number) {
-            case 1:
-                color = Color.BLUE;
-                break;
-            case 2:
-                color = Color.YELLOW;
-                break;
-            case 3:
-                color = Color.ORANGE;
-                break;
-            case 4:
-                color = Color.CYAN;
-                break;
-            case 5:
-                color = Color.RED;
-                break;
-            case 6:
-                color = Color.MAGENTA;
-                break;
-            case 7:
-                color = Color.WHITE;
-                break;
-            case 8:
-                color = Color.LIGHT_GRAY;
-                break;
-            case 9:
-                color = Color.PINK;
-                break;
-            default:
-                break;
+            // fazer este metodo funcionar
+            // c.giveRandomColor();
+
+            cars.add(c);
         }
-        return color;
+
+        myCar.draw();
+        cars.add(myCar);
+
     }
 
     //start animation
     public void start() throws InterruptedException {
+
+        myCar.initKeyboard();
+
+        Iterator<Movable> carIterator;
+
         while (true) {
+            carIterator = cars.iterator();
             Thread.sleep(delay);
 
-            for (int i = 0; i < cars.length; i++) {
-                checkCollisions(cars[i]);
-                ((Car)cars[i]).accelerate();
+            while (carIterator.hasNext()) {
+                checkCollisions(cars);
+                carIterator.next().move();
+
             }
+
         }
     }
 
     //compare with cells visited
-    public void checkCollisions(Car car) {
+    public void checkCollisions(ArrayList<Movable> cars) {
 
-        if(car.isCrashed()) {
-            return;
-        }
+        Iterator<Movable> mIterator1 = cars.iterator();
+        Iterator<Movable> mIterator2;
+        Movable m1;
+        Movable m2;
 
-        int cCol = car.getRepresentation().getCol();
-        int cRow = car.getRepresentation().getRow();
+        while (mIterator1.hasNext()) {
+            m1 = mIterator1.next();
 
-
-        if (grid.isCellVisited(cCol, cRow)) {
-            System.out.println("CRASHED");
-            car.crash();
-        } else {
-            grid.visitCell(cCol,cRow);
-        }
-
-        for (Car c : cars) {
-
-            if (c == car) {
+            if (m1.isCrashed()) {
                 continue;
             }
-            //no point checking with self
-            // TODO: override equals
-            if (c.getRepresentation().samePos(car.getRepresentation())) {
 
-                //make both crash
-                c.crash();
-                car.crash();
+            System.out.println(m1.getPosition().getCol() + " " + m1.getPosition().getRow());
+            if (grid.isCellVisited(m1.getPosition())) {
+                System.out.println("CRASHED");
+                m1.crash();
+            }
+
+            mIterator2 = cars.iterator();
+            while (mIterator2.hasNext()) {
+                m2 = mIterator2.next();
+
+                if (m2 == m1) {
+                    continue;
+                }
+
+                if (m1.getPosition().equals(m2.getPosition())) {
+                    m1.crash();
+                    m2.crash();
+                }
             }
 
 
         }
+
+
+
+        /*int myCarCol = myCar.getRepresentation().getCol();
+        int myCarRow = myCar.getRepresentation().getRow();
+
+        if (grid.isCellVisited(myCarCol, myCarRow)) {
+            System.out.println("CRASHED");
+            myCar.crash();
+        } else {
+            grid.visitCell(myCarCol, myCarRow);
+        }*/
+
     }
 
 

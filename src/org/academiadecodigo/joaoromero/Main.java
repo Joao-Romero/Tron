@@ -8,7 +8,7 @@ public class Main {
         //g.init();
 
         Game g = new Game(800, 800, 20, 100);
-        g.init(1);
+        g.init(10);
         g.start();
 
 

@@ -1,5 +1,6 @@
 package org.academiadecodigo.joaoromero.field;
 
+import org.academiadecodigo.joaoromero.cars.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
@@ -8,20 +9,27 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
  */
 public class Cell {
 
-    private boolean visited;
+    private Movable visitor;
     private Rectangle square;
 
-    public Cell (int x, int y, int cellSize) {
+    public Cell(int x, int y, int cellSize) {
         square = new Rectangle(x, y, cellSize, cellSize);
         square.setColor(Color.DARK_GRAY);
     }
 
-    public void visit() {
-        this.visited = true;
+    public boolean visit(Movable visitor) {
+        if (!isVisited()) {
+            this.visitor = visitor;
+            square.setColor(visitor.getColor());
+            square.fill();
+            return true;
+        }
+
+        return false;
     }
 
     public boolean isVisited() {
-        return visited;
+        return visitor != null;
     }
 
     public void draw() {

@@ -13,16 +13,6 @@ public class Tester {
 
         Grid g = new Grid(10, 100, 100);
         Representation r = new Representation(g);
-        System.out.println("Row: " + r.getRow() + ";    Col: " + r.getCol() + ";     rect y: " + r.getModel().getY() + ";     rect x: " + r.getModel().getX() + "\n");
-
-        r.moveNorth(1);
-        System.out.println("Go North 1");
-        System.out.println("Row: " + r.getRow() + ";    Col: " + r.getCol() + ";     rect y: " + r.getModel().getY() + ";     rect x: " + r.getModel().getX() + "\n");
-
-        r.moveNorth(1000);
-        System.out.println("Go North 1000");
-        System.out.println("Row: " + r.getRow() + ";    Col: " + r.getCol() + ";     rect y: " + r.getModel().getY() + ";     rect x: " + r.getModel().getX() + "\n");
-
 
 
     }

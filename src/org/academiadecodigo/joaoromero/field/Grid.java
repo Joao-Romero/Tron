@@ -1,5 +1,6 @@
 package org.academiadecodigo.joaoromero.field;
 
+import org.academiadecodigo.joaoromero.cars.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
@@ -75,18 +76,20 @@ public final class Grid {
         }
     }
 
-    public void visitCell(int col, int row) {
-        getCellFromIndex(col, row).visit();
+    public void visitCell(Movable movable) {
+        getCellFromPosition(movable.getPosition()).visit(movable);
     }
 
     // TODO: make indexOf(col,row) private method
 
     //returns cell state: visited or !visited (T/F)
-    public boolean isCellVisited(int col, int row) {
-        return getCellFromIndex(col, row).isVisited();
+    public boolean isCellVisited(GridPosition pos) {
+        return getCellFromPosition(pos).isVisited();
     }
 
-    private Cell getCellFromIndex(int col, int row) {
+    private Cell getCellFromPosition(GridPosition position) {
+        int col = position.getCol();
+        int row = position.getRow();
         return cells[col * rows + row];
     }
 

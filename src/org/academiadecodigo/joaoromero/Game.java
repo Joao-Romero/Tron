@@ -41,6 +41,7 @@ public class Game {
         cars = new ArrayList<>();
         myCar = new PlayableCar(1, Color.YELLOW, grid);
 
+
         for (int i = 0; i < numbCarsCreated; i++) {
             Car c = new Car(1, grid);
             c.draw();

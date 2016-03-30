@@ -10,7 +10,12 @@ public enum KeyList {
     KEY_UP(Direction.NORTH),
     KEY_DOWN(Direction.SOUTH),
     KEY_LEFT(Direction.WEST),
-    KEY_RIGHT(Direction.EAST);
+    KEY_RIGHT(Direction.EAST),
+
+    KEY_W(Direction.NORTH),
+    KEY_S(Direction.SOUTH),
+    KEY_A(Direction.WEST),
+    KEY_D(Direction.EAST);
 
 
     private Direction direction;
